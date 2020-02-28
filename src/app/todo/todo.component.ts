@@ -13,10 +13,6 @@ export class TodoComponent implements OnInit {
   formGroup: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    let myTodo: TodoModel;
-
-
-
     this.formGroup = this.fb.group({
       task: ['', Validators.compose([
         Validators.minLength(3), // qtd minima de caracteres
@@ -27,13 +23,13 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.loadFromLocalStorage();
   }
 
   taskAdd() {
     const task = this.formGroup.controls.task.value;
-    const id = this.todoList.length + 1;
     this.todoList.push(new TodoModel(task, false));
+    this.saveOnLocalStorage();
     this.formGroup.reset();
   }
 
@@ -42,10 +38,21 @@ export class TodoComponent implements OnInit {
     if (index !== -1) {
       this.todoList.splice(index, 1);
     }
+    this.saveOnLocalStorage();
   }
 
-  taskDone(){
+  taskDone() {
 
+  }
+
+  saveOnLocalStorage() {
+    const data = JSON.stringify(this.todoList);
+    localStorage.setItem('todos', data);
+  }
+
+  loadFromLocalStorage() {
+    const data = localStorage.getItem('todos');
+    this.todoList = JSON.parse(data);
   }
 
 }

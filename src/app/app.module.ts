@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule, MatFormFieldModule } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,7 @@ import { TodoComponent } from './todo/todo.component';
     MatCheckboxModule,
     FormsModule,
     FontAwesomeModule,
+    MatFormFieldModule,
 
   ],
   providers: [],
