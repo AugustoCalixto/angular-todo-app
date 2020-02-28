@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoModel } from '../models/todo.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-todo',
@@ -7,32 +9,43 @@ import { TodoModel } from '../models/todo.model';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
-
   todoList: TodoModel[] = []; // lista de tarefas vazia ( tipo: todo.models.ts )
+  formGroup: FormGroup;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     let myTodo: TodoModel;
-    const array: TodoModel[] = [
-      { id: 1, todo: 'Ir no mercado', done: false },
-      { id: 2, todo: 'Estudar', done: false },
-      { id: 3, todo: 'Ir na academia', done: false }
-    ]
-    array.forEach((element: TodoModel) => {
-      myTodo = new TodoModel(element.id, element.todo, element.done);
-      this.todoList.push(myTodo); // adicionar a ação na lista de tarefas
-    });
 
+
+
+    this.formGroup = this.fb.group({
+      task: ['', Validators.compose([
+        Validators.minLength(3), // qtd minima de caracteres
+        Validators.maxLength(30), // qtd maxima de caracteres
+        Validators.required, // é obrigatiorio
+      ])]
+    })
   }
 
   ngOnInit() {
 
   }
 
-  remove(todo: TodoModel) {
+  taskAdd() {
+    const task = this.formGroup.controls.task.value;
+    const id = this.todoList.length + 1;
+    this.todoList.push(new TodoModel(task, false));
+    this.formGroup.reset();
+  }
+
+  taskRemove(todo: TodoModel) {
     const index = this.todoList.indexOf(todo);
     if (index !== -1) {
       this.todoList.splice(index, 1);
     }
+  }
+
+  taskDone(){
+
   }
 
 }

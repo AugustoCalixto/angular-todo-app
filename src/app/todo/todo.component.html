@@ -1,6 +1,14 @@
 <h1>Lista de tarefas</h1>
-<ul>
+<ol>
   <li *ngFor="let todo of todoList" >
-    {{todo.id}} - {{todo.todo}} <button *ngIf="!todo.done">Concluir</button> | <button (click)="remove(todo)">Excluir</button>
+    {{todo.todo}} <button *ngIf="!todo.done">Concluir</button> | <button (click)="taskRemove(todo)">Excluir</button>
   </li>
-</ul>
+</ol>
+
+<form [formGroup]="formGroup">
+  <fieldset>
+    <label for="task">Tarefa: </label>
+    <input type="text" name="task" id="task" placeholder="Insira sua tarefa" maxlength="30" formControlName="task">
+    <button (click)="taskAdd()" >Salvar</button>
+  </fieldset>
+</form>
