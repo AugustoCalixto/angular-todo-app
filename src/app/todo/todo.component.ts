@@ -11,6 +11,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class TodoComponent implements OnInit {
   todoList: TodoModel[] = []; // lista de tarefas vazia ( tipo: todo.models.ts )
   formGroup: FormGroup;
+  taskGroup: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.formGroup = this.fb.group({
@@ -19,7 +20,7 @@ export class TodoComponent implements OnInit {
         Validators.maxLength(30), // qtd maxima de caracteres
         Validators.required, // é obrigatiorio
       ])]
-    })
+    });
   }
 
   ngOnInit() {
@@ -41,8 +42,12 @@ export class TodoComponent implements OnInit {
     this.saveOnLocalStorage();
   }
 
-  taskDone() {
-
+  taskDone(todo: TodoModel) {
+    const index = this.todoList.indexOf(todo);
+    if (index !== -1) {
+      todo.done = true;
+    }
+    this.saveOnLocalStorage();
   }
 
   saveOnLocalStorage() {

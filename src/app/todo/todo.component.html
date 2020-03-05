@@ -1,17 +1,26 @@
 <div class="container">
-  <h1>Lista de tarefas</h1>
-  <div class="todo-container">
-    <ol class="todo-list">
-      <li class="todo-item" *ngFor="let todo of todoList">
-        {{todo.todo}} <button *ngIf="!todo.done">Concluir</button> | <button (click)="taskRemove(todo)">Excluir</button>
-      </li>
-    </ol>
+  <div class="task-area">
+    <div class="title-area">
+      <h1>Lista de tarefas</h1>
+    </div>
+    <div class="todo-container">
+      <ol class="todo-list">
+        <li class="todo-item" *ngFor="let todo of todoList">
+          {{todo.todo}} <button *ngIf="!todo.done" class="done" (click)="taskDone(todo)" ></button> | <button
+            (click)="taskRemove(todo)" class="remove"></button>
+        </li>
+      </ol>
+    </div>
   </div>
 
   <form [formGroup]="formGroup">
-      <label for="task">Tarefa: </label>
-      <input type="text" name="task" id="task" placeholder="Insira sua tarefa" maxlength="30" formControlName="task">
-      <button (click)="taskAdd()"> Salvar</button>
+    <mat-form-field appearance="outline">
+      <mat-label>Adicionar Tarefas</mat-label>
+      <input matInput type="text" name="task" id="task" placeholder="Insira sua tarefa" maxlength="30"
+        formControlName="task">
+      <mat-hint>Deve conter entre 3 e 30 caracteres.</mat-hint>
+    </mat-form-field>
 
+    <button (click)="taskAdd()"> Salvar</button>
   </form>
 </div>
